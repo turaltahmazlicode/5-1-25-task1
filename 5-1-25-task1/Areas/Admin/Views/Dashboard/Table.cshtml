@@ -1,0 +1,40 @@
+﻿@model _5_1_25_task1.ViewModels.AdminIndexViewModel
+
+<!-- Table Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Responsive Table</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Fullname</th>
+                                <th scope="col">Department</th>
+                                <th scope="col">Department Id</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var doctor in Model.Doctors)
+                            {
+                                <tr>
+                                    <th scope="row">@doctor.Id</th>
+                                    <td>@doctor.Image</td>
+                                    <td>@doctor.Fullname</td>
+                                    <td>@doctor.Department?.Title</td>
+                                    <td>@doctor.DepartmentId</td>
+                                    <td><a class="btn btn-danger" asp-action="Delete" asp-route-id="@doctor.Id">Delete</a></td>
+                                    <td><a class="btn btn-info" asp-action="Update" asp-route-id="@doctor.Id">Update</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Table End -->

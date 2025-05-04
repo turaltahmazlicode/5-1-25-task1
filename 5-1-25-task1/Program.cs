@@ -17,6 +17,10 @@ namespace _5_1_25_task1
             var app = builder.Build();
             app.UseStaticFiles();
 
+            app.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
+                );
             app.MapControllerRoute(name: "Default", pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
