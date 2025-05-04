@@ -43,6 +43,8 @@ public class DashboardController : Controller
     {
         if (!ModelState.IsValid)
             return NotFound(nameof(Table));
+        if (_context.Departments.Find(doctor.DepartmentId) is null)
+            return NotFound();
         await _context.Doctors.AddAsync(doctor);
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Table));
@@ -86,10 +88,8 @@ public class DashboardController : Controller
     [HttpPost]
     public async Task<IActionResult> CreateDepartment(Department department)
     {
-        Console.WriteLine("hello");
         if (!ModelState.IsValid)
             return NotFound(nameof(Table));
-        Console.WriteLine("hello");
         await _context.Departments.AddAsync(department);
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Table));
