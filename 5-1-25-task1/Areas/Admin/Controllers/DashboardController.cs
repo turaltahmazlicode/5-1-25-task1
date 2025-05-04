@@ -28,17 +28,18 @@ public class DashboardController : Controller
         AdminIndexViewModel vm = new AdminIndexViewModel()
         {
             Doctors = await _context.Doctors.Include(c => c.Department).ToListAsync(),
+            Departments = await _context.Departments.ToListAsync(),
         };
         return View(vm);
     }
 
-    public IActionResult Create()
+    public IActionResult CreateDoctor()
     {
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Doctor doctor)
+    public async Task<IActionResult> CreateDoctor(Doctor doctor)
     {
         if (!ModelState.IsValid)
             return NotFound(nameof(Table));
@@ -47,7 +48,7 @@ public class DashboardController : Controller
         return RedirectToAction(nameof(Table));
     }
 
-    public async Task<IActionResult> Update(int id)
+    public async Task<IActionResult> UpdateDoctor(int id)
     {
         var doctor = await _context.Doctors.FindAsync(id);
         if (doctor is null)
@@ -56,7 +57,7 @@ public class DashboardController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Update(Doctor doctor)
+    public async Task<IActionResult> UpdateDoctor(Doctor doctor)
     {
         if (!ModelState.IsValid)
             return NotFound();
@@ -67,12 +68,57 @@ public class DashboardController : Controller
         return RedirectToAction(nameof(Table));
     }
 
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> DeleteDoctor(int id)
     {
         var doctor = await _context.Doctors.FindAsync(id);
         if (doctor is null)
             return NotFound();
         _context.Doctors.Remove(doctor);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Table));
+    }
+
+    public IActionResult CreateDepartment()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateDepartment(Department department)
+    {
+        Console.WriteLine("hello");
+        if (!ModelState.IsValid)
+            return NotFound(nameof(Table));
+        Console.WriteLine("hello");
+        await _context.Departments.AddAsync(department);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Table));
+    }
+
+    public async Task<IActionResult> UpdateDepartment(int id)
+    {
+        var department = await _context.Doctors.FindAsync(id);
+        if (department is null)
+            return NotFound();
+        return View(department);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateDepartment(Department department)
+    {
+        if (!ModelState.IsValid)
+            return NotFound();
+        _context.Departments.Update(department);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Table));
+    }
+
+    public async Task<IActionResult> DeleteDepartment(int id)
+    {
+        var department = await _context.Departments.FindAsync(id);
+        if (department is null)
+            return NotFound();
+        _context.Departments.Remove(department);
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Table));
     }

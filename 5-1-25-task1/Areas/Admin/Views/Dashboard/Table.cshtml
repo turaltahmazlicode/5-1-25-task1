@@ -5,7 +5,7 @@
     <div class="row g-4">
         <div class="col-12">
             <div class="bg-secondary rounded h-100 p-4">
-                <h6 class="mb-4">Responsive Table</h6>
+                <h6 class="mb-4">Doctors</h6>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -26,10 +26,39 @@
                                     <td>@doctor.Fullname</td>
                                     <td>@doctor.Department?.Title</td>
                                     <td>@doctor.DepartmentId</td>
-                                    <td><a class="btn btn-danger" asp-action="Delete" asp-route-id="@doctor.Id">Delete</a></td>
-                                    <td><a class="btn btn-info" asp-action="Update" asp-route-id="@doctor.Id">Update</a></td>
+                                    <td><a class="btn btn-danger" asp-action="DeleteDoctor" asp-route-id="@doctor.Id">Delete</a></td>
+                                    <td><a class="btn btn-info" asp-action="UpdateDoctor" asp-route-id="@doctor.Id">Update</a></td>
                                 </tr>
                             }
+                            <tr>
+                                <td><a class="btn btn-success" asp-action="CreateDoctor">Create</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h6 class="mb-4">Departments</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Title</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var department in Model.Departments)
+                            {
+                                <tr>
+                                    <th scope="row">@department.Id</th>
+                                    <td>@department.Title</td>
+                                    <td><a class="btn btn-danger" asp-action="DeleteDepartment" asp-route-id="@department.Id">Delete</a></td>
+                                    <td><a class="btn btn-info" asp-action="UpdateDepartment" asp-route-id="@department.Id">Update</a></td>
+                                </tr>
+                            }
+                            <tr>
+                                <td><a class="btn btn-success" asp-action="CreateDepartment">Create</a></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
