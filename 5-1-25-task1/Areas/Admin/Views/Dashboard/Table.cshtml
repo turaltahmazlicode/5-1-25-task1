@@ -26,12 +26,12 @@
                                     <td>@doctor.Fullname</td>
                                     <td>@doctor.Department?.Title</td>
                                     <td>@doctor.DepartmentId</td>
-                                    <td><a class="btn btn-danger" asp-action="DeleteDoctor" asp-route-id="@doctor.Id">Delete</a></td>
-                                    <td><a class="btn btn-info" asp-action="UpdateDoctor" asp-route-id="@doctor.Id">Update</a></td>
+                                    <td><a class="btn btn-danger" asp-controller="Doctor" asp-action="DeleteDoctor" asp-route-id="@doctor.Id">Delete</a></td>
+                                    <td><a class="btn btn-info" asp-controller="Doctor" asp-action="UpdateDoctor" asp-route-id="@doctor.Id">Update</a></td>
                                 </tr>
                             }
                             <tr>
-                                <td><a class="btn btn-success" asp-action="CreateDoctor">Create</a></td>
+                                <td><a class="btn btn-success" asp-controller="Doctor" asp-action="CreateDoctor">Create</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -52,12 +52,13 @@
                                 <tr>
                                     <th scope="row">@department.Id</th>
                                     <td>@department.Title</td>
-                                    <td><a class="btn btn-danger" asp-action="DeleteDepartment" asp-route-id="@department.Id">Delete</a></td>
-                                    <td><a class="btn btn-info" asp-action="UpdateDepartment" asp-route-id="@department.Id">Update</a></td>
+                                    <td><a class="btn btn-danger" asp-controller="Department" asp-action="DeleteDepartment" asp-route-id="@department.Id">Delete</a></td>
+                                    <td><a class="btn btn-info" asp-controller="Department" asp-action="UpdateDepartment" asp-route-id="@department.Id">Update</a></td>
+                                    <td><a class="btn btn-warning" asp-controller="Department" asp-action="AddDoctors" asp-route-id="@department.Id">Add Doctors</a></td>
                                 </tr>
                             }
                             <tr>
-                                <td><a class="btn btn-success" asp-action="CreateDepartment">Create</a></td>
+                                <td><a class="btn btn-success" asp-controller="Department" asp-action="CreateDepartment">Create</a></td>
                             </tr>
                         </tbody>
                     </table>

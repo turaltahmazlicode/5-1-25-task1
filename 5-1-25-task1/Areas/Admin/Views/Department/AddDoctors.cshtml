@@ -1,0 +1,23 @@
+﻿@model _5_1_25_task1.Areas.Admin.ViewModels.AddDoctorsVM
+
+<!-- Form Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Add Doctors to @Model.DepartmentTitle Department</h6>
+                <form method="post">
+                    <input type="hidden" asp-for="DepartmentId" />
+                    <div class="mb-3">
+                        <label for="SelectedDoctorIds" class="form-label">Doctors</label>
+                        <select asp-for="SelectedDoctorIds" class="form-select" multiple="multiple"
+                                asp-items="@(new SelectList(Model.AvailableDoctors, "Id", "Fullname"))">
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Form End -->
