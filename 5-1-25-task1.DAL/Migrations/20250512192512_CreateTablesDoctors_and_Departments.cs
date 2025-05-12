@@ -5,7 +5,7 @@
 namespace _5_1_25_task1.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class CreateTablesDoctors_and_Departments : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

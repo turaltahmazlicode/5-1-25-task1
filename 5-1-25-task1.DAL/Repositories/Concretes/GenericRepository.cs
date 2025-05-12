@@ -1,5 +1,5 @@
 ﻿namespace _5_1_25_task1.DAL.Repositories.Concretes;
-public class GenericRepository<T> : IGenericRepository<T> where T : class, new()
+public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity, new()
 {
     public GenericRepository(AppDbContext appDbContext) => _context = appDbContext;
 
@@ -12,8 +12,8 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class, new()
     public void Delete(T entity) => Table.Remove(entity);
 
     public IQueryable<T> GetAll() => Table.AsQueryable();
-
-    public async Task<T?> GetByIdAsync(int id) => await Table.FindAsync(id);
+    public T? GetById(int id) => Table.AsNoTracking().FirstOrDefault(t => t.Id == id);
+    public async Task<T?> GetByIdAsync(int id) => await Table.AsNoTracking().FirstOrDefaultAsync(t => t.Id == id);
 
     public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
 

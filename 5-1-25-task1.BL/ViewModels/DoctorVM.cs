@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace _5_1_25_task1.DAL.Models;
-public class Doctor : BaseEntity
+public class DoctorVM
 {
     [Required]
     [MinLength(2), MaxLength(30)]
@@ -13,11 +13,8 @@ public class Doctor : BaseEntity
     public string LastName { get; set; }
 
     [Required]
-    public string ImageUrl { get; set; }
+    public Department Department { get; set; }
 
     [Required]
-    public int DepartmentId { get; set; }
-
-    [ForeignKey("DepartmentId")]
-    public Department Department { get; set; }
+    public IFormFile Image { get; set; }
 }
