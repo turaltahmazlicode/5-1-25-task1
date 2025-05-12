@@ -24,22 +24,26 @@ public abstract class GenericService<TEntity> : IGenericService<TEntity>
         return await _repositoy.GetByIdAsync(id);
     }
 
-    public async void Update(TEntity entity)
+    public void Update(TEntity entity)
     {
-        if (_repositoy.GetById(entity.Id) == null)
-            throw new Exception("Entity not found");
+        IsExist(entity);
         _repositoy.Update(entity);
     }
 
-    public async void Delete(TEntity entity)
+    public void Delete(TEntity entity)
     {
-        if (_repositoy.GetById(entity.Id) == null)
-            throw new Exception("Entity not found");
+        IsExist(entity);
         _repositoy.Delete(entity);
     }
 
     public async Task SaveChangesAsync()
     {
         await _repositoy.SaveChangesAsync();
+    }
+
+    private void IsExist(TEntity entity)
+    {
+        if (_repositoy.GetById(entity.Id) == null)
+            throw new Exception("Entity not found");
     }
 }

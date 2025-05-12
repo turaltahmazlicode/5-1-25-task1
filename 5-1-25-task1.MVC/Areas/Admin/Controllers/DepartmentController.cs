@@ -66,5 +66,45 @@ namespace _5_1_25_task1.MVC.Areas.Admin.Controllers
                 return View();
             }
         }
+
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var department = await _departmentService.GetByIdAsync(id);
+
+            if (department == null)
+                return NotFound();
+
+            return View(new DepartmentVM() { Id = department.Id, Title = department.Title });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(DepartmentVM vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+
+            var department = new Department
+            {
+                Id = vm.Id,
+                Title = vm.Title,
+            };
+
+            try
+            {
+                _departmentService.Update(department);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return View(vm);
+            }
+            await _departmentService.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+
     }
 }
