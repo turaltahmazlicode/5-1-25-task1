@@ -13,36 +13,28 @@
                             <div class="form-group">
                                 <label asp-for="FirstName">FirstName</label>
                                 <input asp-for="FirstName" type="text" class="form-control p_input" />
-                                <span asp-validation-for="FirstName" style="color:red"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="LastName">LastName</label>
                                 <input asp-for="LastName" type="text" class="form-control p_input" />
-                                <span asp-validation-for="LastName" style="color:red"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Username">Username</label>
                                 <input asp-for="Username" type="text" class="form-control p_input" />
-                                <span asp-validation-for="Username" style="color:red"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Email">Email</label>
                                 <input asp-for="Email" type="email" class="form-control p_input" />
-                                <span asp-validation-for="Email" style="color:red"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Password">Password</label>
                                 <input asp-for="Password" type="password" class="form-control p_input" />
-                                <span asp-validation-for="Password" style="color:red"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="ConfirmPassword">Confirm Password</label>
                                 <input asp-for="ConfirmPassword" type="password" class="form-control p_input" />
-                                <span asp-validation-for="ConfirmPassword" style="color:red"></span>
                             </div>
-                            <div asp-validation-summary="All">
-
-                            </div>
+                            <div asp-validation-summary="All" style="color:red"></div>
                             <div class="form-group d-flex align-items-center justify-content-between">
                                 <div class="form-check">
                                     <label asp-for="RememberMe" class="form-check-label">
@@ -66,7 +58,7 @@
                                 </button>
                             </div>
                             <p class="sign-up text-center">
-                                Already have an Account?<a href="#"> Sign In</a>
+                                Already have an Account?<a asp-action="Login"> Sign In</a>
                             </p>
                             <p class="terms">
                                 By creating an account you are accepting our<a href="#">
