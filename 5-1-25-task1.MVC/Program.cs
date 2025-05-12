@@ -1,3 +1,4 @@
+using _5_1_25_task1.BL.Services.Concretes;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -22,9 +23,11 @@ public class Program
         builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("default")));
 
-        //builder.Services.AddScoped<IGenericRepository<ModelName>, GenericRepository<ModelName>>();
+        builder.Services.AddScoped<IGenericRepository<Doctor>, GenericRepository<Doctor>>();
+        builder.Services.AddScoped<IGenericRepository<Department>, GenericRepository<Department>>();
 
-        //builder.Services.AddScoped<NonGenericService>();
+        builder.Services.AddScoped<DoctorService>();
+        builder.Services.AddScoped<DepartmentService>();
 
         var app = builder.Build();
 
