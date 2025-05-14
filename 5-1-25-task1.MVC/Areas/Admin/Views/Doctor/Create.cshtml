@@ -1,0 +1,33 @@
+﻿@model DoctorVM
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Create Doctor</h4>
+                    <form class="forms-sample" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label asp-for="FirstName"></label>
+                            <input class="form-control" asp-for="FirstName" />
+                            <label asp-for="LastName"></label>
+                            <input class="form-control" asp-for="LastName" />
+                            <label asp-for="Image"></label>
+                            <input class="form-control" asp-for="Image" />
+                            <label asp-for="DepartmentId"></label>
+                            <div>
+                                <select class="form-select btn btn-primary" aria-label="Default select example" asp-for="DepartmentId">
+                                    @foreach (Department department in ViewBag?.Departments)
+                                    {
+                                        <option class="dropdown-item" asp-for="Department" value="@department.Id">@department.Title</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div asp-validation-summary="All" style="color:red"></div>
+                        <button type="submit" class="btn btn-primary mr-2" asp-action="Create">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

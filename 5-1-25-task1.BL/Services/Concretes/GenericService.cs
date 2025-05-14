@@ -24,6 +24,11 @@ public abstract class GenericService<TEntity> : IGenericService<TEntity>
         return await _repositoy.GetByIdAsync(id);
     }
 
+    public List<TEntity> GetBy(Func<TEntity, bool> predicate)
+    {
+        return _repositoy.GetAll().Where(predicate).ToList();
+    }
+
     public void Update(TEntity entity)
     {
         IsExist(entity);
@@ -41,9 +46,19 @@ public abstract class GenericService<TEntity> : IGenericService<TEntity>
         await _repositoy.SaveChangesAsync();
     }
 
-    private void IsExist(TEntity entity)
+    public TEntity IsExist(TEntity entity)
     {
-        if (_repositoy.GetById(entity.Id) == null)
+        var e = _repositoy.GetById(entity.Id);
+        if (e is null)
             throw new Exception("Entity not found");
+        return e;
+    }
+
+    public TEntity IsExistById(int id)
+    {
+        var e = _repositoy.GetById(id);
+        if (e is null)
+            throw new Exception("Entity not found");
+        return e;
     }
 }

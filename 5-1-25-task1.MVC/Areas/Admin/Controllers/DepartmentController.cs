@@ -8,10 +8,12 @@ namespace _5_1_25_task1.MVC.Areas.Admin.Controllers
     public class DepartmentController : Controller
     {
         private readonly DepartmentService _departmentService;
+        private readonly DoctorService _doctorService;
 
-        public DepartmentController(DepartmentService departmentService)
+        public DepartmentController(DepartmentService departmentService, DoctorService doctorService)
         {
             _departmentService = departmentService;
+            _doctorService = doctorService;
         }
 
         public IActionResult Index()
@@ -29,16 +31,16 @@ namespace _5_1_25_task1.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Create(DepartmentVM vm)
         {
             if (!ModelState.IsValid)
-            {
                 return View(vm);
-            }
 
             var department = new Department
             {
                 Title = vm.Title,
             };
+
             await _departmentService.AddAsync(department);
             await _departmentService.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -67,19 +69,16 @@ namespace _5_1_25_task1.MVC.Areas.Admin.Controllers
             }
         }
 
-
         public async Task<IActionResult> Edit(int id)
         {
-            var department = await _departmentService.GetByIdAsync(id);
-
-            if (department == null)
-                return NotFound();
-
-            return View(new DepartmentVM() { Id = department.Id, Title = department.Title });
+            var department = _departmentService.IsExistById(id);
+            department.Doctors = _doctorService.GetAll();
+            return View(department);
+            //return View(new DepartmentVM() { Id = department.Id, Title = department.Title });
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(DepartmentVM vm)
+        public async Task<IActionResult> Edit(Department vm)
         {
             if (!ModelState.IsValid)
             {

@@ -20,9 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Helper\Extensions\" />
-    <Folder Include="Helper\" />
     <Folder Include="wwwroot\assets\" />
+    <Folder Include="wwwroot\Upload\" />
   </ItemGroup>
 
   <ItemGroup>

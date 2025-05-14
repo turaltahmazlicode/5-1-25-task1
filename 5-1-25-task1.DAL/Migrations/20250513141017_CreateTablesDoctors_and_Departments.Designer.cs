@@ -12,7 +12,7 @@ using _5_1_25_task1.DAL.Contexts;
 namespace _5_1_25_task1.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250512192512_CreateTablesDoctors_and_Departments")]
+    [Migration("20250513141017_CreateTablesDoctors_and_Departments")]
     partial class CreateTablesDoctors_and_Departments
     {
         /// <inheritdoc />
@@ -241,17 +241,12 @@ namespace _5_1_25_task1.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Departments");
                 });
@@ -339,17 +334,10 @@ namespace _5_1_25_task1.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("_5_1_25_task1.DAL.Models.Department", b =>
-                {
-                    b.HasOne("_5_1_25_task1.DAL.Models.Department", null)
-                        .WithMany("Departments")
-                        .HasForeignKey("DepartmentId");
-                });
-
             modelBuilder.Entity("_5_1_25_task1.DAL.Models.Doctor", b =>
                 {
                     b.HasOne("_5_1_25_task1.DAL.Models.Department", "Department")
-                        .WithMany()
+                        .WithMany("Doctors")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -359,7 +347,7 @@ namespace _5_1_25_task1.DAL.Migrations
 
             modelBuilder.Entity("_5_1_25_task1.DAL.Models.Department", b =>
                 {
-                    b.Navigation("Departments");
+                    b.Navigation("Doctors");
                 });
 #pragma warning restore 612, 618
         }
