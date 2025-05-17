@@ -13,11 +13,11 @@ public class Doctor : BaseEntity
     public string LastName { get; set; }
 
     [Required]
+    [DataType(DataType.ImageUrl)]
     public string ImageUrl { get; set; }
 
-    [Required]
-    public int DepartmentId { get; set; }
+    public int? DepartmentId { get; set; }
 
     [ForeignKey("DepartmentId")]
-    public Department Department { get; set; }
+    public Department? Department { get; set; }
 }

@@ -1,16 +1,24 @@
 ﻿@model DepartmentVM
 <div class="main-panel">
     <div class="content-wrapper">
-        <div class="col-md-6 grid-margin stretch-card">
+        <div class="grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Create Department</h4>
-                    <form class="forms-sample" method="post">
+                    <form class="forms-sample" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label asp-for="Title"></label>
                             <input type="text"
                                    class="form-control"
                                    asp-for="Title" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Doctors">Doctors</label>
+                            @{
+                                var sl = new SelectList(@ViewBag.Doctors, "Id", "FirstName");
+                            }
+                            <select asp-for="Doctors" asp-items="sl" class="js-example-basic-multiple form-control" multiple="multiple" style="width: 100%">
+                            </select>
                         </div>
                         <div asp-validation-summary="All" style="color:red"></div>
                         <button type="submit" class="btn btn-primary mr-2" asp-action="Create">Submit</button>

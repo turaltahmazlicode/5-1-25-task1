@@ -4,22 +4,18 @@
         <div class="col-md-6 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Create Department</h4>
+                    <h4 class="card-title">Edit Department</h4>
                     <form class="forms-sample" method="post">
                         <div class="form-group">
                             <label asp-for="Title"></label>
-                            <input type="text"
-                                   class="form-control"
-                                   asp-for="Title" />
+                            <input type="text" class="form-control" asp-for="Title" />
                         </div>
                         <div class="form-group">
-                            <label asp-for="Doctors"></label>
-                            <select class="form-select btn btn-primary" aria-label="Default select example" asp-for="Doctors">
-                                <option>Select Doctors</option>
-                                @foreach (var doctor in Model.Doctors)
-                                {
-                                    <option value="@doctor.Id">@doctor.FirstName @doctor.LastName</option>
-                                }
+                            <label asp-for="Doctors">Doctors</label>
+                            @{
+                                var sl = new SelectList(@Model.Doctors, "Id", "FirstName");
+                            }
+                            <select asp-for="Doctors" asp-items="sl" class="js-example-basic-multiple form-control" multiple="multiple" style="width: 100%">
                             </select>
                         </div>
                         <div asp-validation-summary="All" style="color:red"></div>

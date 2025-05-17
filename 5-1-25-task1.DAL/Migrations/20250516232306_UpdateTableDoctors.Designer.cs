@@ -12,8 +12,8 @@ using _5_1_25_task1.DAL.Contexts;
 namespace _5_1_25_task1.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250513141017_CreateTablesDoctors_and_Departments")]
-    partial class CreateTablesDoctors_and_Departments
+    [Migration("20250516232306_UpdateTableDoctors")]
+    partial class UpdateTableDoctors
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -259,7 +259,7 @@ namespace _5_1_25_task1.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
@@ -338,9 +338,7 @@ namespace _5_1_25_task1.DAL.Migrations
                 {
                     b.HasOne("_5_1_25_task1.DAL.Models.Department", "Department")
                         .WithMany("Doctors")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.Navigation("Department");
                 });

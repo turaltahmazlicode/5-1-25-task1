@@ -1,3 +1,5 @@
-﻿global using _5_1_25_task1.BL.Services.Concretes;
+﻿global using _5_1_25_task1.DAL.Models;
+global using _5_1_25_task1.DAL.Repositories.Abstractions;
+global using Microsoft.EntityFrameworkCore;
 global using System.ComponentModel.DataAnnotations;
-global using _5_1_25_task1.DAL.Models;
+global using Microsoft.AspNetCore.Mvc.Rendering;

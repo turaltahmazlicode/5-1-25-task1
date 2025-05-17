@@ -1,17 +1,25 @@
 ﻿namespace _5_1_25_task1.DAL.Repositories.Abstractions;
-public interface IGenericRepository<T> where T : BaseEntity, new()
+public interface IGenericRepository<TEntity> where TEntity : BaseEntity, new()
 {
-    DbSet<T> Table { get; }
+    public DbSet<TEntity> Table { get; }
 
-    Task AddAsync(T entity);
+    #region Create
+    public Task AddAsync(TEntity entity);
+    #endregion
 
-    IQueryable<T> GetAll();
-    T? GetById(int id);
-    Task<T?> GetByIdAsync(int id);
+    #region Read
+    public IQueryable<TEntity> GetAll(bool isTracking = false, params string[] includes);
+    public IQueryable<TEntity> GetByCondition(Func<TEntity, bool> predicate, bool isTracking = false, params string[] includes);
+    public Task<TEntity?> GetByIdAsync(int id, bool isTracking = false, params string[] includes);
+    #endregion
 
-    void Update(T entity);
+    #region Update
+    public void Update(TEntity entity);
+    #endregion
 
-    void Delete(T entity);
+    #region Delete
+    public void Delete(TEntity entity);
+    #endregion
 
-    Task SaveChangesAsync();
+    public Task<int> SaveChangesAsync();
 }

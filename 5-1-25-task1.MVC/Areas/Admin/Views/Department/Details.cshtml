@@ -1,22 +1,45 @@
 ﻿@model Department
+
 <div class="main-panel">
     <div class="content-wrapper">
-        <h1>Department</h1>
-        <table class="table table">
-            <thead>
-                <tr>
-                    <th> Id </th>
-                    <th> Title </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td> @Model.Id </td>
-                    <td> @Model.Title </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
-</div>
+        <div class="page-header">
+            <h3 class="page-title"> Page Header </h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Before</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Current</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Department Details</h4>
+                    <table class="table table">
+                        <thead>
+                            <tr>
+                                <th> Id </th>
+                                <th> Title </th>
+                                <th> Doctors </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> @Model.Id </td>
+                                <td> @Model.Title </td>
 
+                                <td>
+                                    @{
+                                        var sl = new SelectList(Model.Doctors, "Id", "FirstName", Model.Doctors);
+                                    }
+                                    <select asp-for="Doctors" asp-items="sl" class="form-control" style="width: 100%">
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
