@@ -1,25 +1,24 @@
-﻿@model Department
+﻿@model DepartmentVM
+
 <div class="main-panel">
     <div class="content-wrapper">
-        <h1>Department</h1>
-        <table class="table table">
-            <thead>
-                <tr>
-                    <th> Id </th>
-                    <th> Title </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td> @Model.Id </td>
-                    <td> @Model.Title </td>
-                </tr>
-            </tbody>
-        </table>
-        <form method="post">
-            <button class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.Id">Delete</button>
-        </form>
-    </div>
-    
-</div>
+        <div class="page-header">
+            <h3 class="page-title"> Page Header </h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Before</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Current</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Title</h4>
+                    <p class="card-description">Description</p>
 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

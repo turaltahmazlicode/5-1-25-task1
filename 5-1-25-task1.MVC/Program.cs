@@ -1,6 +1,5 @@
-using _5_1_25_task1.BL.Services.Concretes;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using _5_1_25_task1.DAL.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace _5_1_25_task1.MVC;
 
@@ -10,35 +9,23 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddControllersWithViews();
+        builder.Services.AddServices();
 
-        builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
-        {
-            opt.User.RequireUniqueEmail = true;
-            opt.Password.RequiredLength = 8;
-            opt.Lockout.AllowedForNewUsers = true;
-            opt.Lockout.MaxFailedAccessAttempts = 3;
-        }).AddEntityFrameworkStores<AppDbContext>();
-
-        builder.Services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("default")));
-
-        builder.Services.AddScoped<IGenericRepository<Doctor>, GenericRepository<Doctor>>();
-        builder.Services.AddScoped<IGenericRepository<Department>, GenericRepository<Department>>();
-
-        builder.Services.AddScoped<DoctorService>();
-        builder.Services.AddScoped<DepartmentService>();
+        builder.Services.AddDbContext<AppDbContext>(opt =>
+            opt.UseSqlServer(builder.Configuration.GetConnectionString("default")));
 
         var app = builder.Build();
 
         app.UseStaticFiles();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         app.MapControllerRoute(name: "areas",
             pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
 
         app.MapControllerRoute(name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");
-
 
         app.Run();
     }

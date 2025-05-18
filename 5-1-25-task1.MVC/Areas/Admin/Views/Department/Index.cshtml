@@ -1,44 +1,58 @@
 ﻿@model List<Department>
+
 <div class="main-panel">
     <div class="content-wrapper">
-        <div class="col-lg-12 grid-margin stretch-card">
+        <div class="page-header">
+            <h3 class="page-title"> Page Header </h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Before</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Current</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Departments</h4>
-                    <div class="table-responsive">
-                        <table class="table table">
-                            <a class="btn btn-warning" asp-action="Create">Create</a>
-                            <thead>
-                                <tr>
-                                    <th> # </th>
-                                    <th> Id </th>
-                                    <th> Title </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    int count = 1;
-                                }
-                                @foreach (Department department in Model)
-                                {
-                                    <tr>
-                                        <td> @count </td>
-                                        <td> @department.Id </td>
-                                        <td> @department.Title </td>
-                                        <td>
-                                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@department.Id">Edit</a>
-                                            <a class="btn btn-secondary" asp-action="Details" asp-route-id="@department.Id">Details</a>
-                                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@department.Id">Delete</a>
-                                        </td>
-                                    </tr>
-                                    count++;
-                                }
-                            </tbody>
-                        </table>
+                    <h4 class="card-title">Title</h4>
+                    <p class="card-description">Description</p>
+                    <div class="grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Basic Table</h4>
+                                <p class="card-description">Add class <code>.table</code></p>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Id</th>
+                                                <th>Title</th>
+                                                <th>Doctors count</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                int count = 1;
+                                                foreach (var department in Model)
+                                                {
+                                                    <tr>
+                                                        <td>@count</td>
+                                                        <td>@department.Id</td>
+                                                        <td>@department.Title</td>
+                                                        <td>@department.Doctors?.Count</td>
+                                                    </tr>
+                                                    count++;
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-

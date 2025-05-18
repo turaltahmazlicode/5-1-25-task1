@@ -1,22 +1,21 @@
-﻿using System.Text;
+﻿using System.Threading.Tasks;
 
-namespace _5_1_25_task1.MVC.Helper.Extensions;
+namespace _5_1_25_task1.MVC.Utilities.Extensions;
 
 public static class FileExtensions
 {
-    public static string Upload(this IFormFile file, string rootPath, string folderName)
+    public static async Task<string> UploadFileAsync(this IFormFile file, string rootPath, string folderName)
     {
         string fileName = file.FileName;
 
         if (fileName.Length > 64)
             fileName = fileName[^64..];
 
-        fileName = $"{Guid.NewGuid()}_{fileName}";
+        fileName = Guid.NewGuid() + fileName;
 
-        string path = Path.Combine(rootPath, folderName, fileName);
-        Console.WriteLine(path);
-        using FileStream fs = new FileStream(path, FileMode.Create);
-        file.CopyTo(fs);
+        using FileStream fs = new FileStream(Path.Combine(rootPath, folderName, fileName), FileMode.Create);
+
+        await file.CopyToAsync(fs);
 
         return fileName;
     }

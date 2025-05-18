@@ -1,22 +1,23 @@
 ﻿using _5_1_25_task1.BL.Services.Concretes;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Newtonsoft.Json;
+using _5_1_25_task1.BL.ViewModels.Admin;
+using _5_1_25_task1.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
 
 namespace _5_1_25_task1.MVC.Areas.Admin.Controllers;
-
 [Area("Admin")]
+[Authorize(Roles = "Admin")]
 public class DepartmentController : Controller
 {
-    public DepartmentController(DepartmentService departmentService, DoctorService doctorService)
+    public DepartmentController(DepartmentService departmentService)
     {
         _departmentService = departmentService;
-        _doctorService = doctorService;
     }
+
     private readonly DepartmentService _departmentService;
-    private readonly DoctorService _doctorService;
 
     #region Create
-    public async Task<IActionResult> Create()
+    public IActionResult Create()
     {
         return View();
     }
@@ -25,16 +26,15 @@ public class DepartmentController : Controller
     public async Task<IActionResult> Create(DepartmentVM vm)
     {
         if (!ModelState.IsValid)
-        {
             return View(vm);
-        }
 
-        var department = new Department
+        Department department = new()
         {
-            Title = vm.Title,
+            Title = vm.Title
         };
 
-        await _departmentService.AddAsync(department);
+        await _departmentService.CreateAsync(department);
+
         await _departmentService.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));
@@ -44,80 +44,120 @@ public class DepartmentController : Controller
     #region Read
     public async Task<IActionResult> Index()
     {
-        List<Department> departments = await _departmentService.GetAll();
-        return View(departments);
+        return View(await _departmentService.GetAll(false, "Doctors"));
+    }
+
+    public async Task<IActionResult> Details(int id)
+    {
+        Department department;
+        try
+        {
+            department = await _departmentService.GetIfExist(id);
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
+
+        DepartmentVM vm = new()
+        {
+            Title = department.Title,
+        };
+
+        ViewBag.Id = id;
+        return View(vm);
     }
     #endregion
 
     #region Update
-    public async Task<IActionResult> Edit(int id)
+    public async Task<IActionResult> Update(int id)
     {
-        var department = await _departmentService.GetByIdAsync(id, false, "Doctors");
+        Department department;
+        try
+        {
+            department = await _departmentService.GetIfExist(id);
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
+
         DepartmentVM vm = new()
         {
             Title = department.Title,
-            Doctors = await _doctorService.GetAll(),
-            SelectedDoctors = department.Doctors
         };
+
+        ViewBag.Id = id;
         return View(vm);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(Department department)
+    public async Task<IActionResult> Update(int id, DepartmentVM vm)
     {
         if (!ModelState.IsValid)
-            return View(department);
+            return View(vm);
+
+        Department department = new()
+        {
+            Id = id,
+            Title = vm.Title,
+        };
 
         try
         {
-            //var doctors = await _doctorService.GetAll();
-
-            var dp = await _departmentService.GetByIdAsync(department.Id);
-
-
             await _departmentService.Update(department);
+            await _departmentService.SaveChangesAsync();
+
+            return View();
         }
         catch (Exception ex)
         {
-            ModelState.AddModelError("", ex.Message);
-            return View(department);
+            return NotFound(ex.Message);
         }
-        await _departmentService.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
     }
     #endregion
 
     #region Delete
     public async Task<IActionResult> Delete(int id)
     {
-        return View(await _departmentService.GetByIdAsync(id));
+        Department department;
+        try
+        {
+            department = await _departmentService.GetIfExist(id);
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
+
+        DepartmentVM vm = new()
+        {
+            Title = department.Title,
+        };
+
+        ViewBag.Id = id;
+        return View(vm);
     }
 
     [HttpPost, ActionName("Delete")]
     public async Task<IActionResult> DeletePost(int id)
     {
-        //try
+        Department department = new()
         {
-            var department = await _departmentService.GetByIdAsync(id);
+            Id = id,
+        };
 
+        try
+        {
             await _departmentService.Delete(department);
-
             await _departmentService.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return View();
         }
-        //catch (Exception ex)
-        //{
-        //    Console.WriteLine(ex.Message);
-        //    return View(id);
-        //}
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
     }
-
     #endregion
-
-    public async Task<IActionResult> Details(int id)
-    {
-        return View(await _departmentService.GetByIdAsync(id, false, "Doctors"));
-    }
-
 }

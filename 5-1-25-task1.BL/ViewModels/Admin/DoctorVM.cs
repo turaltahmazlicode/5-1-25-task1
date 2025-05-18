@@ -1,5 +1,9 @@
-﻿namespace _5_1_25_task1.DAL.Models;
-public class Doctor : BaseEntity
+﻿using _5_1_25_task1.DAL.Models;
+using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
+
+namespace _5_1_25_task1.BL.ViewModels.Admin;
+public class DoctorVM
 {
     [Required, MinLength(2), MaxLength(30)]
     public string Name { get; set; }
@@ -9,7 +13,7 @@ public class Doctor : BaseEntity
     public string Surname { get; set; }
 
     [Required]
-    public string ImageUrl { get; set; }
+    public IFormFile Image { get; set; }
 
     public string? FacebookUrl { get; set; }
     public string? TwitterUrl { get; set; }
