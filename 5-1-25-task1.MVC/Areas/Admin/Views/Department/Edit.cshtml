@@ -1,4 +1,4 @@
-﻿@model Department
+﻿@model DepartmentVM
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="col-md-6 grid-margin stretch-card">
@@ -11,11 +11,19 @@
                             <input type="text" class="form-control" asp-for="Title" />
                         </div>
                         <div class="form-group">
-                            <label asp-for="Doctors">Doctors</label>
-                            @{
-                                var sl = new SelectList(@Model.Doctors, "Id", "FirstName");
-                            }
-                            <select asp-for="Doctors" asp-items="sl" class="js-example-basic-multiple form-control" multiple="multiple" style="width: 100%">
+                            <label asp-for="SelectedDoctors">Doctors</label>
+                            <select asp-for="SelectedDoctors" class="js-example-basic-multiple form-control" multiple="multiple" style="width: 100%">
+                                @foreach (var doctor in Model.Doctors)
+                                {
+                                    @if (Model.SelectedDoctors.FirstOrDefault(sd => sd.Id == doctor.Id) is not null)
+                                    {
+                                        <option selected value="@doctor.Id">@doctor.FirstName @doctor.LastName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@doctor.Id">@doctor.FirstName @doctor.LastName</option>
+                                    }
+                                }
                             </select>
                         </div>
                         <div asp-validation-summary="All" style="color:red"></div>
